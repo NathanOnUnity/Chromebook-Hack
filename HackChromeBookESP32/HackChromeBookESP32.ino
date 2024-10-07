@@ -23,15 +23,15 @@ void loop() {
   currentMillis = millis();
 
   if(bleKeyboard.isConnected()) {
-    if(canHack == true)
-    {
+    //if(canHack == true)
+    //{
       HackTheChromeBookV2();
-    }
+    //}
     digitalWrite(2, HIGH);
   }else
   {
     digitalWrite(2, LOW);
-    Serial.println("Disconnected");
+    //Serial.println("Disconnected");
   }
 
  // Serial.println("Waiting 5 seconds...");
@@ -43,8 +43,17 @@ void AsyncDelay(float delayAmount){
 
     lastDelayDone = true;
     previousMillis = currentMillis;
-    delayItteration++;
+    if(delayItteration == 6){
+
+      for (bool& i : delayDone) {
+        i = false;
+      }
+
+      delayItteration = 0;
+    }
+    delayItteration += 1;
     delayDone[delayItteration-1] = true;
+    Serial.println(delayItteration + ": Delay Itteration");
   }else{
 
     lastDelayDone = false;
@@ -98,8 +107,6 @@ void HackTheChromeBookV1(){
 }
 
 void HackTheChromeBookV2(){
-  if(canHack == true)
-  {
     canHack = false;
     Serial.println("New Window");
     bleKeyboard.press(KEY_LEFT_CTRL);
@@ -145,6 +152,6 @@ void HackTheChromeBookV2(){
     {bleKeyboard.releaseAll();
 
     HackDelay();
-    }}}}}}}}}
+    }}}}}}}}
 }
 
