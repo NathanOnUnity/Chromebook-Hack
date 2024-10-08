@@ -9,10 +9,12 @@ void setup() {
   Serial.begin(115200);
   Serial.println("Starting BLE");
   bleKeyboard.begin();
+  pinMode(2, OUTPUT);
 }
 
 void loop() {
   if(bleKeyboard.isConnected()) {
+    digitalWrite(2, HIGH);
     Serial.println("New Window");
     bleKeyboard.press(KEY_LEFT_CTRL);
     bleKeyboard.print("n");
@@ -52,6 +54,7 @@ void loop() {
     bleKeyboard.releaseAll();
   }else
   {
+    digitalWrite(2, LOW);
     Serial.println("Disconnected");
   }
 
